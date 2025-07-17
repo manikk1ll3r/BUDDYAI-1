@@ -1,0 +1,70 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+.login-screen {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.login-screen input {
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+}
+
+.container header {
+  text-align: center;
+}
+
+header button {
+  margin: 5px;
+  padding: 10px 20px;
+}
+
+.chat-container {
+  background: white;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 10px;
+}
+
+.chat-history {
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #fafafa;
+  margin-bottom: 10px;
+}
+
+.message {
+  margin: 5px 0;
+}
+
+.emotion-selector button {
+  margin: 5px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+.diary {
+  background: #fffbe6;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 10px;
+}
