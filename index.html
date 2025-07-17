@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BuddyAI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="login-screen" id="loginScreen">
+    <h2>BuddyAI Secret Diary Login</h2>
+    <input type="password" id="passwordInput" placeholder="Enter password..." />
+    <button onclick="login()">Enter</button>
+    <p id="loginError"></p>
+  </div>
+
+  <div class="container" id="mainApp" style="display: none;">
+    <header>
+      <h1>BuddyAI</h1>
+      <p>Choose your Buddy:</p>
+      <button onclick="setBot('Manik')">🤵 Manik</button>
+      <button onclick="setBot('Vellanie')">👩 Vellanie</button>
+      <p id="botName"></p>
+    </header>
+
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-history" id="chatHistory"></div>
+
+      <div class="emotion-selector">
+        <p>How are you feeling?</p>
+        <button onclick="selectEmotion('happy')">😊 Happy</button>
+        <button onclick="selectEmotion('sad')">😢 Sad</button>
+        <button onclick="selectEmotion('anxious')">😰 Anxious</button>
+      </div>
+
+      <textarea id="userInput" placeholder="Type here..."></textarea>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="diary">
+      <h3>Secret Diary</h3>
+      <textarea id="diaryEntry" placeholder="Write your private thoughts..."></textarea>
+      <button onclick="saveDiary()">Save Diary</button>
+      <p id="saveMsg"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
