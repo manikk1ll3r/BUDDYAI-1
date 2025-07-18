@@ -2,85 +2,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BuddyAI</title>
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- ✅ Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js"></script>
-</head>
-<body>
-  <div id="loginScreen">
-    <h2>BuddyAI Login</h2>
-
-    <!-- ✅ Email input -->
-    <input type="email" id="emailInput" placeholder="Email" /><br>
-
-    <!-- ✅ Password input -->
-    <input type="password" id="passwordInput" placeholder="Password" /><br>
-
-    <!-- ✅ Buttons -->
-    <button onclick="login()">Login</button>
-    <button onclick="signup()">Sign Up</button>
-    <button onclick="signInWithPhone()">Sign In with Phone</button>
-
-    <p id="loginError"></p>
-  </div>
-
-  <!-- ✅ Your custom script -->
+  <title>BuddyAI Login</title>
   <script type="module">
-    // ✅ Import Firebase functions
+    // Firebase SDKs
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
-    // ✅ Your Firebase config
+    // Your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyAJpp1aXZkVcJCuYETmzU2F2t3ZTv93F_g",
       authDomain: "buddy-ai-6ab7f.firebaseapp.com",
       projectId: "buddy-ai-6ab7f",
       storageBucket: "buddy-ai-6ab7f.appspot.com",
       messagingSenderId: "598722484561",
-      appId: "1:598722484561:web:4b8324fbc460be8511db70",
-      measurementId: "G-PJL686TQ69"
+      appId: "1:598722484561:web:4b8324fbc460be8511db70"
     };
 
-    // ✅ Initialize Firebase
+    // Init Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // ✅ Login function
-    window.login = function() {
-      const email = document.getElementById('emailInput').value;
-      const password = document.getElementById('passwordInput').value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          alert("Logged in!");
-        })
-        .catch(error => {
-          document.getElementById('loginError').innerText = error.message;
-        });
-    }
-
-    // ✅ Signup function
-    window.signup = function() {
-      const email = document.getElementById('emailInput').value;
-      const password = document.getElementById('passwordInput').value;
-
+    // Sign Up
+    window.signUp = () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
       createUserWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          alert("Account created!");
-        })
-        .catch(error => {
-          document.getElementById('loginError').innerText = error.message;
-        });
-    }
+        .then(() => alert('✅ Account created!'))
+        .catch(error => alert(error.message));
+    };
 
-    // ✅ Phone sign-in example
-    window.signInWithPhone = function() {
-      alert("Phone sign-in needs a real phone number input + Recaptcha. We’ll set this up next!");
-    }
+    // Log In
+    window.logIn = () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => alert('✅ Logged in!'))
+        .catch(error => alert(error.message));
+    };
+
+    // Phone auth
+    window.signInWithPhone = () => {
+      window.recaptchaVerifier = new RecaptchaVerifier('signInPhone', {
+        'size': 'invisible',
+        'callback': response => {}
+      }, auth);
+
+      const phoneNumber = window.prompt("Enter your phone number with country code (+XX):");
+      signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+        .then(confirmationResult => {
+          const code = window.prompt("Enter the OTP code:");
+          return confirmationResult.confirm(code);
+        })
+        .then(() => alert('✅ Phone sign in successful!'))
+        .catch(error => alert(error.message));
+    };
   </script>
+</head>
+<body>
+  <h2>BuddyAI Login</h2>
+  <input type="email" id="email" placeholder="Email"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <button onclick="logIn()">Login</button>
+  <button onclick="signUp()">Sign Up</button>
+  <button id="signInPhone" onclick="signInWithPhone()">Sign In with Phone</button>
 </body>
 </html>
