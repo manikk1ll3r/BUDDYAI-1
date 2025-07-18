@@ -27,7 +27,10 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => alert('✅ Account created!'))
+        .then(() => {
+          alert('✅ Account created!');
+          showDiary();
+        })
         .catch(error => alert(error.message));
     };
 
@@ -36,7 +39,10 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => alert('✅ Logged in!'))
+        .then(() => {
+          alert('✅ Logged in!');
+          showDiary();
+        })
         .catch(error => alert(error.message));
     };
 
@@ -53,17 +59,43 @@
           const code = window.prompt("Enter the OTP code:");
           return confirmationResult.confirm(code);
         })
-        .then(() => alert('✅ Phone sign in successful!'))
+        .then(() => {
+          alert('✅ Phone sign in successful!');
+          showDiary();
+        })
         .catch(error => alert(error.message));
+    };
+
+    // Show diary, hide login
+    function showDiary() {
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('diarySection').style.display = 'block';
+    }
+
+    // Save diary entry (optional - just shows an alert for now)
+    window.saveDiary = () => {
+      const entry = document.getElementById('diaryEntry').value;
+      alert('📖 Saved entry: ' + entry);
     };
   </script>
 </head>
+
 <body>
-  <h2>BuddyAI Login</h2>
-  <input type="email" id="email" placeholder="Email"><br>
-  <input type="password" id="password" placeholder="Password"><br>
-  <button onclick="logIn()">Login</button>
-  <button onclick="signUp()">Sign Up</button>
-  <button id="signInPhone" onclick="signInWithPhone()">Sign In with Phone</button>
+  <!-- ✅ LOGIN SECTION -->
+  <div id="loginSection">
+    <h2>BuddyAI Login</h2>
+    <input type="email" id="email" placeholder="Email"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="logIn()">Login</button>
+    <button onclick="signUp()">Sign Up</button>
+    <button id="signInPhone" onclick="signInWithPhone()">Sign In with Phone</button>
+  </div>
+
+  <!-- ✅ SECRET DIARY SECTION -->
+  <div id="diarySection" style="display: none;">
+    <h2>Your Secret Diary</h2>
+    <textarea id="diaryEntry" rows="10" cols="50" placeholder="Write your thoughts here..."></textarea><br>
+    <button onclick="saveDiary()">Save</button>
+  </div>
 </body>
 </html>
